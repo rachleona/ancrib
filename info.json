@@ -1,0 +1,15 @@
+{
+    "caesar": {
+        "description": "",
+        "modes": {
+            "pure": {
+                "key": true,
+                "keyType": "int",
+                "keyLength": null
+            }
+        }
+    },
+    "columnar": {
+
+    }
+}
