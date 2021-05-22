@@ -1,11 +1,12 @@
-export default function caesar(input, options) 
+const info =  require("../info.json")
+const { check } = require("../utils/typechecks")
+const protocipher = require("../utils/prototype")
+
+function caesar(plaintext, ciphertext, options) 
 {
-    if(typeof input != "string" || options.key != "number" || !Number.isInteger(options.key)) 
-    throw "invalid input"
-    
-    this.key = options.key || 1
-    this.input = input.split("")
-    
+    const isValidKey = check(info.caesar.pure.keyType)
+    protocipher.call(this, plaintext, ciphertext, options, isValidKey)
+
     const cipher = (k, chars) => {
         return chars.map( c => {
             const char = c.charCodeAt(0)
@@ -13,24 +14,25 @@ export default function caesar(input, options)
             {
                 return String.fromCharCode(65 + (char + k) % 65 % 26)
             }
-            else if(char > 96 && char < 123)
+
+            if(char > 96 && char < 123)
             {
                 return String.fromCharCode(97 + (char + k) % 97 % 26)
             }
-            else
-            {
-                return String.fromCharCode(char)
-            }
-        }).join("")
+
+            return String.fromCharCode(char).join("")
+        })
     }
 
     this.encrypt = () => {
-        return cipher(this.key, input)
+        this.c = cipher(this.k, this.p.split(""))
+        return this.c
     }
 
     this.decrypt = () => {
-        return cipher(26 - this.key, input)
+        this.p = cipher(26 - this.k, this.c.split(""))
+        return this.p
     }
-
-    
 }
+
+module.exports = { caesar }
