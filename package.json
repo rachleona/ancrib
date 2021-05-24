@@ -4,7 +4,8 @@
   "main": "main.js",
   "scripts": {
     "start": "node main",
-    "server": "nodemon main"
+    "server": "nodemon main",
+    "test": "jest"
   },
   "author": "rachleona <ractam2002@gmail.com>",
   "license": "MIT",

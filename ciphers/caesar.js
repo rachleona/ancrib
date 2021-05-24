@@ -5,7 +5,7 @@ const protocipher = require("../utils/prototype")
 function caesar(plaintext, ciphertext, options) 
 {
 
-    const isValidKey = check(info.caesar.pure.keyType)
+    const isValidKey = check(info.caesar.modes.pure.keyType)
     protocipher.call(this, plaintext, ciphertext, options, isValidKey)
 
     const cipher = (k, chars) => {
@@ -26,13 +26,15 @@ function caesar(plaintext, ciphertext, options)
     }
 
     this.encrypt = () => {
-        attr.c = cipher(attr.k, attr.p.split(""))
-        return attr.c
+        const { k, p } = this.getAttr("k", "p")
+        this.setC(cipher(k, p.split("")).join(""))
+        return this.getAttr("p", "c", "errors")
     }
 
     this.decrypt = () => {
-        attr.p = cipher(26 - attr.k, attr.c.split(""))
-        return attr.p
+        const { k, c } = this.getAttr("k", "c")
+        this.setP(cipher(26 - k, c.split("")).join(""))
+        return this.getAttr("p", "c", "errors")
     }
 }
 

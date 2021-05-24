@@ -5,25 +5,27 @@ const { rsaKeyPair, enigmaSetup } = require('./keyclasses')
 //TODO string size checks
 const check = (type, options={ msg: "" }) => {
     let comp = true
+
     switch(type)
     {
         case "rsa":
-            comp = !v instanceof rsaKeyPair || rsaKeyPair.size != size
+            comp = v => !v instanceof rsaKeyPair || rsaKeyPair.size != size
             break
         case "enm":
-            comp = !v instanceof enigmaSetup
+            comp = v => !v instanceof enigmaSetup
             break
         case "int":
-            comp = typeof v != "number" || !Number.isInteger(v)
+            comp = v => typeof v != "number" || !Number.isInteger(v)
             break
         case "str":
-            comp = typeof v != "string" || v.length != size
+            comp = v => typeof v != "string" //|| v.length != size
             break
         default: 
-            comp = typeof v != type
+        comp = v => typeof v != type
     }
-    return v => { 
-        if(comp) throw typeError(msg, type)
+
+    return (v, para) => { 
+        if(comp(v)) throw new typeError(options.msg, type, para)
     }
 }
 

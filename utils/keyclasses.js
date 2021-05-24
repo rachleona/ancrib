@@ -1,4 +1,4 @@
-function rsaKeyPair(public, private)
+function rsaKeyPair(pub, pri)
 {
 
 }

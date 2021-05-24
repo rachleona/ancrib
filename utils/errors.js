@@ -1,22 +1,9 @@
 function typeError(msg, requiredType, para) 
 {
-    const internal = {
-        error: new Error(msg),
-        code: "INPUT_TYPE_ERROR",
-        para, 
-        requiredType
-    }
-
-    return {
-        ...internal,
-        toJSON: () => ({
-            code: internal.code,
-            stack: internal.error.stack,
-            para,
-            msg,
-            requiredType
-        })
-    }
+    this.error = new Error(msg),
+    this.code = "INPUT_TYPE_ERROR",
+    this.para = para 
+    this.requiredType = requiredType
 }
 
 //TODO plan out exceptions needed
