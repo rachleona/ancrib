@@ -2,32 +2,39 @@ const { check } = require("../utils/typechecks")
 
 export default function cipher(plaintext, ciphertext, options, keycheck)
 {
-    this.errors = []
+    let errors = []
+    const attr = {
+        "k": "",
+        "p": "",
+        "c": ""
+    }
 
     const isValidString = check("str", { msg: "invalid input"})
     const setAttr  = (para, arg, func) => {
         try
         {
             func(arg)
-            this[para] = arg
+            attr[para] = arg
         }
         catch(err)
         {
-            this[para] = ""
-            this.errors.push(err)
+            attr[para] = ""
+            errors.push(err)
         }
+
+        return attr[para]
     }
 
     const checkAttr = (para, func) => {
         try
         {
-            func(this[para])
-            this.errors = this.errors.filter( v => v.code != "INPUT_TYPE_ERROR" || v.para != para )
+            func(attr[para])
+            errors = errors.filter( v => v.code != "INPUT_TYPE_ERROR" || v.para != para )
             return true
         }
         catch(err)
         {
-            this.errors.push(err)
+            errors.push(err)
             return false
         }
     }
