@@ -14,7 +14,27 @@
         "modes": {
             "pure": {
                 "key": true,
+                "keyType": "str",
+                "keyLength": null
+            },
+            "scytale":{
+                "key":true,
                 "keyType": "int",
+                "keyLength": null
+            }
+        }
+    },
+    "vigenere": {
+        "description": "",
+        "modes": {
+            "pure": {
+                "key": true,
+                "keyType": "str",
+                "keyLength": null
+            },
+            "autokey": {
+                "key": true,
+                "keyType": "str",
                 "keyLength": null
             }
         }

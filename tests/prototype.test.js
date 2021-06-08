@@ -3,7 +3,7 @@ const { check } = require("../utils/typechecks")
 const { typeError } = require("../utils/errors")
 
 const intCheck = check("int", { msg: "Gimme int!" })
-const myCipher = new protocipher("abcde", "", { key: 3 }, intCheck)
+const myCipher = new protocipher("abcde", "", 3, intCheck)
 
 test("type checker working as expected", () => {
     expect(() => { intCheck("", "k") }).toThrow(typeError)

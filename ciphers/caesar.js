@@ -6,7 +6,8 @@ function caesar(plaintext, ciphertext, options)
 {
 
     const isValidKey = check(info.caesar.modes.pure.keyType)
-    protocipher.call(this, plaintext, ciphertext, options, isValidKey)
+
+    protocipher.call(this, plaintext, ciphertext, options.key, isValidKey)
 
     const cipher = (k, chars) => {
         return chars.map( a => {
@@ -21,19 +22,20 @@ function caesar(plaintext, ciphertext, options)
                 return String.fromCharCode(97 + (char + k) % 97 % 26)
             }
 
-            return String.fromCharCode(char).join("")
+            return String.fromCharCode(char)
         })
     }
 
     this.encrypt = () => {
-        const { k, p } = this.getAttr("k", "p")
-        this.setC(cipher(k, p.split("")).join(""))
+        const { k, p, errors } = this.getAttr("k", "p", "errors")
+        if(errors.length == 0) this.setC(cipher(k, p.split("")).join(""))
+
         return this.getAttr("p", "c", "errors")
     }
 
     this.decrypt = () => {
-        const { k, c } = this.getAttr("k", "c")
-        this.setP(cipher(26 - k, c.split("")).join(""))
+        const { k, c, errors } = this.getAttr("k", "c", "errors")
+        if(errors.length == 0) this.setP(cipher(26 - k, c.split("")).join(""))
         return this.getAttr("p", "c", "errors")
     }
 }

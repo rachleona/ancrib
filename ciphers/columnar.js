@@ -1,18 +1,18 @@
 const info = require("../info.json")
 const { check } = require("../utils/typechecks")
-
-const isValidString = check("str")
+const protocipher = require("../utils/prototype")
 
 function columnar(plaintext, ciphertext, options)
 {
-    const isValidKey = check(info.columnar.pure.keyType, { "unique": true })
-    protocipher.call(this, plaintext, ciphertext, options, isValidKey)
+    const isValidKey = check(info.columnar.modes.pure.keyType, { "unique": true })
+    protocipher.call(this, plaintext, ciphertext, options.key, isValidKey)
 
-    const encrypt = (k, len, text) => {
-        const clen = text.length
-        const padded = text + "X".repeat(len - text.length % len)
+    const encrypt = (key, len, text) => {
+        const k = key.split("").sort().map( v => key.indexOf(v) )
+        const padded = text.padEnd(Math.ceil(text.length / len) * len, " ")
+        const clen = padded.length
 
-        const chars = Array(clen / len)
+        const chars = Array(clen / len) 
         .fill(0)
         .map( (v, i) => {
             const l = len * i
@@ -34,8 +34,10 @@ function columnar(plaintext, ciphertext, options)
         }).join("")
     }
 
-    const decrypt = (k, len, text) => {
-        const clen = text.length
+    const decrypt = (key, len, text) => {
+        const k = key.split("").sort().map( v => key.indexOf(v) )
+        const padded = text.padEnd(Math.ceil(text.length / len) * len, " ")
+        const clen = padded.length
         const rlen = clen / len
 
         const chars = Array(rlen)
@@ -44,7 +46,7 @@ function columnar(plaintext, ciphertext, options)
             return Array(len)
             .fill("")
             .reduce( (str, e, n) => {
-                return str + text[i + n * rlen]
+                return str + padded[i + n * rlen]
             }, "")
         })
 
@@ -54,29 +56,33 @@ function columnar(plaintext, ciphertext, options)
             }, "")
         })
 
-        return res.join("")
+        return res.join("").trimEnd()
     }
 
 
     this.encrypt = () => {
-        this.c = encrypt(this.k, this.len, this.p)
-        return this.c
+        const { k, p, errors } = this.getAttr("k", "p", "errors")
+
+        if(errors.length == 0) this.setC(encrypt(k, k.length, p))
+        return this.getAttr("c", "p", "errors")
     }
 
     this.decrypt = () => {
-        this.p = decrypt(this.k, this.len, this.c)
-        return this.p
+        const { k, c, errors } = this.getAttr("k", "c", "errors")
+        
+        if(errors.length == 0) this.setP(decrypt(k, k.length, c))
+        return this.getAttr("c", "p", "errors")
     }
 }
 
 function scytale(plaintext, ciphertext, options)
 {
-    const isValidKey = check(info.columnar.scytale.keyType)
-    protocipher.call(this, plaintext, ciphertext, options, isValidKey)
+    const isValidKey = check(info.columnar.modes.scytale.keyType)
+    protocipher.call(this, plaintext, ciphertext, options.key, isValidKey)
 
-    const encrypt = (k, chars) => {
-        
-        const len = chars.length / k
+    const encrypt = (k, text) => {
+        const chars = text.padEnd(Math.ceil(text.length / k) * k, " ")
+        const len = Math.ceil(chars.length / k)
     
         return Array(k)
         .fill(0)
@@ -88,12 +94,12 @@ function scytale(plaintext, ciphertext, options)
             }, "")
         }).reduce( (a, v) => {
             return [...a, ...v]
-        }, [])
+        }, []).join("")
     }
     
     const decrypt = (k, chars) => {
     
-        const len = chars.length / k
+        const len = Math.ceil(chars.length / k)
     
         return Array(len)
         .fill(0)
@@ -105,16 +111,21 @@ function scytale(plaintext, ciphertext, options)
             }, "")
         }).reduce( (a, v) => {
             return [...a, ...v]
-        }, [])
+        }, []).join("").trimEnd()
     }    
 
     this.encrypt = () => {
-        this.c = encrypt(this.k, this.p)
-        return this.c
+        const { k, p, errors } = this.getAttr("k", "p", "errors")
+
+        if(errors.length == 0) this.setC(encrypt(k, p))
+        return this.getAttr("c", "p", "errors")
     }
 
     this.decrypt = () => {
-        this.p = decrypt(this.k, this.c)
+        const { k, c, errors } = this.getAttr("k", "c", "errors")
+
+        if(errors.length == 0) this.setP(decrypt(k, c))
+        return this.getAttr("c", "p", "errors")
     }
 
 }
