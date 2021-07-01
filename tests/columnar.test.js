@@ -1,5 +1,5 @@
 const { columnar, scytale } = require('../ciphers/columnar')
-const { typeError, argError } = require('../utils/errors')
+const { typeError } = require('../utils/errors')
 
 // pure columnar
 test("columnar class is defined and has correct values",  () => {
@@ -23,22 +23,15 @@ test("handles non-string key correctly by pushing typeError with correct data in
     expect(e[e.length - 1].requiredType).toBe("str")
 })
 
-// test("handles faulty key strings correctly by pushing argError with correct data into errors error", () => {
-//     const myCol = new columnar("abcde", "", { key: "ADAC" })
+test("handles faulty key strings correctly by pushing typeError with correct data into errors error", () => {
+    const myCol = new columnar("abcde", "", { key: "ADAC" })
 
-//     const e =  myCol.getAttr("errors").errors
+    const e =  myCol.getAttr("errors").errors
    
-//     expect(e[e.length - 1]).toBeInstanceOf(argError)
-//     expect(e[e.length - 1].para).toBe("k")
-//     expect(e[e.length - 1].problem).toBe("Characters not unique")
-
-//     myCol.setK("ACDGEBOPLV")
-//     const f = myCol.getAttr("errors").errors
-
-//     expect(f[f.length - 1]).toBeInstanceOf(argError)
-//     expect(f[f.length - 1].para).toBe("k")
-//     expect(f[f.length - 1].problem).toBe("Exceed max length")
-// })
+    expect(e[e.length - 1]).toBeInstanceOf(typeError)
+    expect(e[e.length - 1].para).toBe("k")
+    expect(e[e.length - 1].msg).toBe("key must be a string of unique characters")
+})
 
 test("encrypt method works correctly", () => {
     const myCol = new columnar("abc", "", { key: "ACB" })
@@ -72,7 +65,7 @@ test("encrypt method handles invalid inputs correctly by pushing error into arra
     expect(res.p).toBe("abc")
     expect(res.errors[0]).toBeInstanceOf(typeError)
 
-    myCol.setK("ACB")
+    myCol.setK("ACBD")
     expect(myCol.encrypt()).toStrictEqual({
         "c": "acb",
         "p": "abc",
@@ -112,7 +105,7 @@ test("decrypt method handles invalid inputs correctly by pushing error into arra
     expect(res.p).toBe("a")
     expect(res.errors[0]).toBeInstanceOf(typeError)
 
-    myCol.setK("ACB")
+    myCol.setK("ACBD")
     expect(myCol.decrypt()).toStrictEqual({
         "c": "acb",
         "p": "abc",
@@ -142,22 +135,6 @@ test("scytale handles non-integer key correctly by pushing typeError with correc
     expect(e[e.length - 1].requiredType).toBe("int")
 })
 
-// test("handles faulty key strings correctly by pushing argError with correct data into errors error", () => {
-//     const myCol = new columnar("abcde", "", { key: "ADAC" })
-
-//     const e =  myCol.getAttr("errors").errors
-   
-//     expect(e[e.length - 1]).toBeInstanceOf(argError)
-//     expect(e[e.length - 1].para).toBe("k")
-//     expect(e[e.length - 1].problem).toBe("Characters not unique")
-
-//     myCol.setK("ACDGEBOPLV")
-//     const f = myCol.getAttr("errors").errors
-
-//     expect(f[f.length - 1]).toBeInstanceOf(argError)
-//     expect(f[f.length - 1].para).toBe("k")
-//     expect(f[f.length - 1].problem).toBe("Exceed max length")
-// })
 
 test("scytale encrypt method works correctly", () => {
     const myCol = new scytale("abcdef", "", { key: 3 })

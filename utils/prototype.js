@@ -1,6 +1,6 @@
 const { check } = require("../utils/typechecks")
 
-function cipher(plaintext, ciphertext, key, keycheck)
+function cipher(plaintext, ciphertext, key, info)
 {
     const attr = {
         "k": "",
@@ -9,9 +9,7 @@ function cipher(plaintext, ciphertext, key, keycheck)
         "errors": []
     }
 
-    //todo argError
-
-    const isValidString = check("str", { msg: "invalid input"})
+    const isValidString = check("str", { msg: "invalid input", misc: {} })
     const setAttr  = (para, arg, func) => {
         try
         {
@@ -51,9 +49,24 @@ function cipher(plaintext, ciphertext, key, keycheck)
         return res
     }
 
-    this.kIsValid = () => { 
-        checkAttr("k", keycheck) 
+    if(info.key)
+    {
+        const keycheck = check(info.keyType, {
+            msg: info.msg,
+            misc: info.keyMisc
+        })
+
+        this.kIsValid = () => { 
+            checkAttr("k", keycheck) 
+        }
+        this.setK = v => { 
+            setAttr("k", v, keycheck) 
+            return attr.k
+        }
+        this.setK(key)
     }
+
+    
     this.pIsValid = () => { 
         checkAttr("p", isValidString) 
     }
@@ -61,10 +74,6 @@ function cipher(plaintext, ciphertext, key, keycheck)
         checkAttr("c", isValidString) 
     }
     
-    this.setK = v => { 
-        setAttr("k", v, keycheck) 
-        return attr.k
-    }
     this.setP = v => { 
         setAttr("p", v, isValidString) 
         return attr.p
@@ -74,7 +83,6 @@ function cipher(plaintext, ciphertext, key, keycheck)
         return attr.c
     }
 
-    this.setK(key)
     this.setP(plaintext)
     this.setC(ciphertext)
 }

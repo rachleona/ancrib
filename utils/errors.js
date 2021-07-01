@@ -4,6 +4,7 @@ function typeError(msg, requiredType, para)
     this.code = "INPUT_TYPE_ERROR"
     this.para = para 
     this.requiredType = requiredType
+    this.msg = msg
 }
 
 function argError(msg, problem, para)

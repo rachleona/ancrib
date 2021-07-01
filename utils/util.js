@@ -7,3 +7,20 @@ const intToBytes = (int, size) => {
     return res
 }
 
+const strToBytes =  string => {
+    const bytes = []
+    for(let i = 0; i < string.length; i++)
+    {
+        let code = string.codePointAt(i)
+        let arr = []
+        while(code > 0xFF)
+        {
+            arr.unshift(code & 0xFF)
+            code = code >>> 8
+        }
+        arr.unshift(code & 0xFF)
+        bytes.push(...arr)
+    }
+
+    return bytes
+}

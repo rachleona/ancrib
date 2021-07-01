@@ -1,13 +1,10 @@
 const info =  require("../info.json")
-const { check } = require("../utils/typechecks")
 const protocipher = require("../utils/prototype")
 
 function caesar(plaintext, ciphertext, options) 
 {
 
-    const isValidKey = check(info.caesar.modes.pure.keyType)
-
-    protocipher.call(this, plaintext, ciphertext, options.key, isValidKey)
+    protocipher.call(this, plaintext, ciphertext, options.key, info.caesar.modes.pure)
 
     const cipher = (k, chars) => {
         return chars.map( a => {

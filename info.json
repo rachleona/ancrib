@@ -5,7 +5,8 @@
             "pure": {
                 "key": true,
                 "keyType": "int",
-                "keyLength": null
+                "keyMisc": {},
+                "msg": "key must be an integer"
             }
         }
     },
@@ -15,12 +16,16 @@
             "pure": {
                 "key": true,
                 "keyType": "str",
-                "keyLength": null
+                "keyMisc": {
+                    "unique": true
+                },
+                "msg": "key must be a string of unique characters"
             },
             "scytale":{
                 "key":true,
                 "keyType": "int",
-                "keyLength": null
+                "keyMisc": {},
+                "msg": "key must be an integer"
             }
         }
     },
@@ -30,12 +35,26 @@
             "pure": {
                 "key": true,
                 "keyType": "str",
-                "keyLength": null
+                "keyMisc": {},
+                "msg": "key must be a string"
             },
             "autokey": {
                 "key": true,
                 "keyType": "str",
-                "keyLength": null
+                "keyMisc": {},
+                "msg": "key must be a string"
+            }
+        }
+    },
+    "rjindael": {
+        "description": "",
+        "modes": {
+            "128": {
+                "key": true,
+                "keyType": "str",
+                "keyMisc": {
+                    "len": { "max": 128, "min": 128 }
+                }
             }
         }
     }
