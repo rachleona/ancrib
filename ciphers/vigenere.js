@@ -34,7 +34,7 @@ function vigenere(plaintext, ciphertext, options)
     }
 
     const decrypt = (ciphertext, key) => {
-        const inverseKey = key.toUpperCase().split("").map( c => String.fromCharCode(156 - c.charCodeAt(0))).join("")
+        const inverseKey = key.toUpperCase().split("").map( c => String.fromCharCode((91 - c.charCodeAt(0)) % 26 + 65 )).join("")
         return encrypt(ciphertext, inverseKey)
     }
 
@@ -61,8 +61,6 @@ function autokey(plaintext, ciphertext, options)
     const encrypt = (plaintext, key) => {
         const chars = plaintext.split("")
         const keys = key.padEnd(chars.length, plaintext).toUpperCase().split("").filter( v => alphabets.includes(v) )
-        console.log(keys)
-        const keylen = key.length
         let counter = 0
     
         const ciphertext = chars.map( (c, i) => {
@@ -88,7 +86,7 @@ function autokey(plaintext, ciphertext, options)
     }
 
     const decrypt = (ciphertext, key) => {
-        const inverseKey = k => k.toUpperCase().split("").map( c => String.fromCharCode(156 - c.charCodeAt(0)))
+        const inverseKey = k => k.toUpperCase().split("").map( c => String.fromCharCode((91 - c.charCodeAt(0)) % 26 + 65 ))
         const chars = ciphertext.split("")
         const keys = inverseKey(key)
 

@@ -14,12 +14,16 @@ function enigmaSetup(rotor1, rotor2, rotor3, ref, plugboard)
 
 function rotor(sequence, notch, start)
 {
-    this.notch = sequence[notch]
+    this.notch = notch
     this.start = start
-    let arr = sequence.splice(start, 26 - start)
-    arr.push(...sequence)
-    this.sequence = arr
-    this.cur = this.sequence[0]
+    this.sequence = sequence
+    this.reset = () => {
+        const i = this.sequence.indexOf(start)
+        let arr = this.sequence.splice(i, 26 - i)
+        arr.push(...this.sequence)
+        this.sequence = arr
+        this.cur = this.sequence[0]
+    }
 
     this.step = () => {
         this.sequence.splice(0, 1)
@@ -27,6 +31,8 @@ function rotor(sequence, notch, start)
     
         this.cur = this.sequence[0]
     }
+
+    this.reset()
 }
 
 const rotorseqI = "EKMFLGDQVZNTOWYHXUSPAIBRCJ".split("")
@@ -35,11 +41,11 @@ const rotorseqIII = "BDFHJLCPRTXVZNYEIWGAKMUSQO".split("")
 const rotorseqIV = "ESOVPZJAYQUIRHXLNFTGKDCMWB".split("")
 const rotorseqV = "VZBRGITYUPSDNHLXAWMJQOFECK".split("")
 
-const rotor1 = new rotor(rotorseqI, 16, 9)
-const rotor2 = new rotor(rotorseqII, 4, 1)
-const rotor3 = new rotor(rotorseqIII, 21, 22)
-const rotor4 = new rotor(rotorseqIV, 9, 7)
-const rotor5 = new rotor(rotorseqV, 25, 6)
+const rotor1 = new rotor(rotorseqI, 'X', 'Z')
+const rotor2 = new rotor(rotorseqII, 'S', 'J')
+const rotor3 = new rotor(rotorseqIII, 'M', 'U')
+const rotor4 = new rotor(rotorseqIV, 'Q', 'A')
+const rotor5 = new rotor(rotorseqV, 'K', 'T')
 
 const defaultRef = "RYUHQSLDPXNGOKMIEAFZCWVJBT".split("")
 const defaultPb = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")

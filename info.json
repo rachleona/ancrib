@@ -46,6 +46,17 @@
             }
         }
     },
+    "vernam": {
+        "description": "",
+        "modes": {
+            "pure": {
+                "key": true,
+                "keyType": "str",
+                "keyMisc": {},
+                "msg": "key must be a string (same length as plaintext otherwise the rest would not be encrypted)"
+            }
+        }
+    },
     "rjindael": {
         "description": "",
         "modes": {
@@ -54,7 +65,19 @@
                 "keyType": "str",
                 "keyMisc": {
                     "len": { "max": 128, "min": 128 }
-                }
+                },
+                "msg": "key must be a 128-bit string"
+            }
+        }
+    },
+    "enigma": {
+        "description": "",
+        "modes": {
+            "pure": {
+                "key": true,
+                "keyType": "enm",
+                "keyMisc": {},
+                "msg": "key must consist of 3 rotors, a reflector and plugboard setup"
             }
         }
     }
