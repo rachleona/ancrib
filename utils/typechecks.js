@@ -20,13 +20,15 @@ const check = (type, options={ msg: "error", misc: {} }) => {
         case "str":
             comp = v => {
                 let res = typeof v == "string"
+                if (!res) return true
+                const buf = Buffer.from(v)
                 res = res && (!options.misc.unique || (new Set(v.split("")).size == v.length))
-                res = res && (!options.misc.len || (v > options.misc.len.min && v < options.misc.len.max))
+                res = res && (!options.misc.len || (buf.length * 8 >= options.misc.len.min && buf.length * 8 <= options.misc.len.max))
                 return !res
             }
             break
         default: 
-        comp = v => typeof v != type
+            comp = v => typeof v != type
     }
 
     return (v, para) => { 

@@ -57,7 +57,7 @@
             }
         }
     },
-    "rjindael": {
+    "rijndael": {
         "description": "",
         "modes": {
             "128": {
@@ -78,6 +78,22 @@
                 "keyType": "enm",
                 "keyMisc": {},
                 "msg": "key must consist of 3 rotors, a reflector and plugboard setup"
+            }
+        }
+    },
+    "md5": {
+        "description": "",
+        "modes": {
+            "pure": {
+                "key": false
+            }
+        }
+    },
+    "sha2": {
+        "description": "",
+        "modes": {
+            "pure": {
+                "key": false
             }
         }
     }
