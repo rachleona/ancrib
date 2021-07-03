@@ -7,12 +7,18 @@ function typeError(msg, requiredType, para)
     this.msg = msg
 }
 
-function argError(msg, problem, para)
+function argError(msg)
 {
     this.error = new Error(msg)
-    this.code = "FAULTY_INPUT"
-    this.para = para
-    this.problem = problem
+    this.code = "API_MISSING_FAULTY_ARG"
+    this.msg = msg
+}
+
+function apiError()
+{
+    this.error = new Error("Server error!")
+    this.code = "SERVER_ERROR"
+    this.msg = "Server error!"
 }
 
 //TODO plan out exceptions needed
