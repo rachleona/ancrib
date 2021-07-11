@@ -18,10 +18,10 @@ const check = (type, options={ msg: "error", misc: {} }) => {
             comp = v => typeof v != "number" || !Number.isInteger(v)
             break
         case "str":
-            comp = v => {
-                let res = typeof v == "string"
+            comp = (v, enc='utf8') => {
+                let res = typeof v == "string" || v instanceof Buffer
                 if (!res) return true
-                const buf = Buffer.from(v)
+                const buf = Buffer.from(v, enc)
                 res = res && (!options.misc.unique || (new Set(v.split("")).size == v.length))
                 res = res && (!options.misc.len || (buf.length * 8 >= options.misc.len.min && buf.length * 8 <= options.misc.len.max))
                 return !res
@@ -31,8 +31,8 @@ const check = (type, options={ msg: "error", misc: {} }) => {
             comp = v => typeof v != type
     }
 
-    return (v, para) => { 
-        if(comp(v)) throw new typeError(options.msg, type, para)
+    return (v, para, e='utf8') => { 
+        if(comp(v, e)) throw new typeError(options.msg, type, para)
     }
 }
 

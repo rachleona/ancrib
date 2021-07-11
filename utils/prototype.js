@@ -10,11 +10,11 @@ function cipher(plaintext, ciphertext, key, info)
     }
 
     const isValidString = check("str", { msg: "invalid input", misc: {} })
-    const setAttr  = (para, arg, func) => {
+    const setAttr  = (para, arg, func, enc='utf8') => {
         try
         {
             attr.errors = attr.errors.filter( v => v.code != "INPUT_TYPE_ERROR" || v.para != para )
-            func(arg, para)
+            func(arg, para, enc)
             attr[para] = arg
         }
         catch(err)
@@ -24,11 +24,11 @@ function cipher(plaintext, ciphertext, key, info)
         }
     }
 
-    const checkAttr = (para, func) => {
+    const checkAttr = (para, func, enc='utf8') => {
         try
         {
             attr.errors = attr.errors.filter( v => v.code != "INPUT_TYPE_ERROR" || v.para != para )
-            func(attr[para], para)
+            func(attr[para], para, enc)
             return true
         }
         catch(err)
@@ -56,11 +56,11 @@ function cipher(plaintext, ciphertext, key, info)
             misc: info.keyMisc
         })
 
-        this.kIsValid = () => { 
-            checkAttr("k", keycheck) 
+        this.kIsValid = (e='utf8') => { 
+            checkAttr("k", keycheck, e) 
         }
-        this.setK = v => { 
-            setAttr("k", v, keycheck) 
+        this.setK = (v, e='utf8') => { 
+            setAttr("k", v, keycheck, e) 
             return attr.k
         }
         this.setK(key)

@@ -90,6 +90,6 @@ const unBlock = (blocks, size=16) => {
 // * INT num = the number of bits to be rotated
 // @RETURNS
 // * INT rotated word
-const leftRotate = (word, num) => ((word << num) | (word >>> (32 - num)))
+const leftRotate = (word, num, size=32) => ((word << num) | (word >>> (size - num))) & (Math.pow(2, size) - 1)
 
 module.exports = { intToBytes, strToBytes, xorBytes, makeBlocks, unBlock, leftRotate }

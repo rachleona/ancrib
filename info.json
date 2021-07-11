@@ -70,6 +70,27 @@
             }
         }
     },
+    "lucifer": {
+        "description": "",
+        "modes": {
+            "pure": {
+                "key": true,
+                "keyType": "str",
+                "keyMisc": {
+                    "len": { "max": 64, "min": 64 }
+                },
+                "msg": "key must be a 64-bit string"
+            },
+            "triple": {
+                "key": true,
+                "keyType": "str",
+                "keyMisc": {
+                    "len": { "max": 128, "min": 128 }
+                },
+                "msg": "key must be a 128-bit string"
+            }
+        }
+    },
     "enigma": {
         "description": "",
         "modes": {
