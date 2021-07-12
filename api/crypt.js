@@ -9,9 +9,10 @@ const { columnar, scytale } = require('../ciphers/columnar')
 const { vigenere, autokey } = require('../ciphers/vigenere')
 const { vernam } = require('../ciphers/vernam')
 const { enigma } = require('../ciphers/enigma')
-const { md5 } = require('../ciphers/md5')
-const { sha2 } = require('../ciphers/sha2')
+const { md5, HMACmd5 } = require('../ciphers/md5')
+const { sha2, HMACsha2 } = require('../ciphers/sha2')
 const { rijndael } = require('../ciphers/aes')
+const { lucifer, triple } = require('../ciphers/des')
 
 const algos = {
     caesar,
@@ -22,11 +23,15 @@ const algos = {
     vernam,
     enigma,
     md5,
+    HMACmd5,
     sha2,
-    rijndael
+    HMACsha2,
+    rijndael,
+    lucifer,
+    triple
 }
 
-const hashes = ["md5", "sha2"]
+const hashes = ["md5", "sha2", "HMACmd5", "HMACsha2"]
 
 //todo standard error objects instead of just messages
 // @route POST api/encrypt
