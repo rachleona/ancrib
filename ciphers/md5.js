@@ -1,6 +1,6 @@
 const info =  require("../info.json")
 const protocipher = require("../utils/prototype")
-const { intToBytes, leftRotate, makeBlocks } = require("../utils/util")
+const { intToBytes, leftRotate, makeBlocks, xorBytes } = require("../utils/util")
 
 function md5(plaintext, ciphertext, options)
 {
@@ -121,4 +121,36 @@ function md5(plaintext, ciphertext, options)
     }
 }
 
-module.exports = { md5 }
+function HMACmd5(plaintext, ciphertext, options)
+{
+    protocipher.call(this, plaintext, ciphertext, options.key, info.md5.modes.hmac)
+
+    const digest = (message, key, pformat='utf8', kformat='utf8') => {
+        const ipad = Buffer.alloc(64, 0x36)
+        const opad = Buffer.alloc(64, 0x5c)
+
+        const k = Buffer.alloc(64)
+        k.write(key, kformat)
+        const m = Buffer.from(message, pformat)
+
+        const ixor = xorBytes(k, ipad)
+        const myMD5 = new md5(Buffer.concat([ixor, m]), "", options)
+
+        const first = Buffer.from(myMD5.hash().c, "hex")
+        const oxor = xorBytes(k, opad)
+
+        myMD5.setP(Buffer.concat([oxor, first]))
+
+        return myMD5.hash().c
+    }
+
+    this.hash = (pformat='utf8', kformat='utf8') => {
+        const { p, k, errors } = this.getAttr("p", "k", "errors")
+        if(errors.length == 0) this.setC(digest(p, k, pformat, kformat))
+
+        return this.getAttr("p", "c", "errors")
+    }
+
+}
+
+module.exports = { md5, HMACmd5 }

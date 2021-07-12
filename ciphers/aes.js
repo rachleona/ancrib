@@ -264,7 +264,7 @@ function rijndael(plaintext, ciphertext, options)
         const r = unBlock(res)
         const i = r.indexOf(0x00)
     
-        return r.slice(0, i).toString()
+        return i == -1 ? r.toString() : r.slice(0, i).toString()
     }
 
     this.encrypt = () => {

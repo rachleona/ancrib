@@ -25,4 +25,4 @@ function apiError()
 // - missing arg?
 // - timeout?
 
-module.exports = { typeError, argError }
+module.exports = { typeError, argError, apiError }

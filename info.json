@@ -107,6 +107,14 @@
         "modes": {
             "pure": {
                 "key": false
+            },
+            "hmac": {
+                "key": true,
+                "keyType": "str",
+                "keyMisc": {
+                    "len": { "max": 512, "min": 128 }
+                },
+                "msg": "key must be a string between 128-512 bit in length"
             }
         }
     },
@@ -115,6 +123,14 @@
         "modes": {
             "pure": {
                 "key": false
+            },
+            "hmac": {
+                "key": true,
+                "keyType": "str",
+                "keyMisc": {
+                    "len": { "max": 512, "min": 256 }
+                },
+                "msg": "key must be a string between 256-512 bit in length"
             }
         }
     }
