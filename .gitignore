@@ -104,6 +104,3 @@ dist
 .tern-port
 
 optionsNotes.txt
-ciphers/rsa.js
-ciphers/rsa_util.js
-tests/time.js

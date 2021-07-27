@@ -1,40 +1,42 @@
-const info =  require("../info.json")
+const info = require("../info.json")
 const protocipher = require("../utils/prototype")
 
-function caesar(plaintext, ciphertext, options) 
-{
+function caesar(plaintext, ciphertext, options) {
+  protocipher.call(
+    this,
+    plaintext,
+    ciphertext,
+    options.key,
+    info.caesar.modes.pure
+  )
 
-    protocipher.call(this, plaintext, ciphertext, options.key, info.caesar.modes.pure)
+  const cipher = (k, chars) => {
+    return chars.map((a) => {
+      const char = a.charCodeAt(0)
+      if (char > 64 && char < 91) {
+        return String.fromCharCode(65 + (((char + k) % 65) % 26))
+      }
 
-    const cipher = (k, chars) => {
-        return chars.map( a => {
-            const char = a.charCodeAt(0)
-            if(char > 64 && char < 91)
-            {
-                return String.fromCharCode(65 + (char + k) % 65 % 26)
-            }
+      if (char > 96 && char < 123) {
+        return String.fromCharCode(97 + (((char + k) % 97) % 26))
+      }
 
-            if(char > 96 && char < 123)
-            {
-                return String.fromCharCode(97 + (char + k) % 97 % 26)
-            }
+      return String.fromCharCode(char)
+    })
+  }
 
-            return String.fromCharCode(char)
-        })
-    }
+  this.encrypt = () => {
+    const { k, p, errors } = this.getAttr("k", "p", "errors")
+    if (errors.length == 0) this.setC(cipher(k, p.split("")).join(""))
 
-    this.encrypt = () => {
-        const { k, p, errors } = this.getAttr("k", "p", "errors")
-        if(errors.length == 0) this.setC(cipher(k, p.split("")).join(""))
+    return this.getAttr("p", "c", "errors")
+  }
 
-        return this.getAttr("p", "c", "errors")
-    }
-
-    this.decrypt = () => {
-        const { k, c, errors } = this.getAttr("k", "c", "errors")
-        if(errors.length == 0) this.setP(cipher(26 - k, c.split("")).join(""))
-        return this.getAttr("p", "c", "errors")
-    }
+  this.decrypt = () => {
+    const { k, c, errors } = this.getAttr("k", "c", "errors")
+    if (errors.length == 0) this.setP(cipher(26 - k, c.split("")).join(""))
+    return this.getAttr("p", "c", "errors")
+  }
 }
 
 module.exports = { caesar }
