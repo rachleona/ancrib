@@ -33,7 +33,7 @@ const algos = {
 
 const hashes = ["md5", "sha2", "HMACmd5", "HMACsha2"]
 
-// @route POST api/encrypt
+// @route POST /encrypt
 // @desc Encrypt msg by chosen algorithm
 router.post(
   "/encrypt",
@@ -76,7 +76,7 @@ router.post(
   }
 )
 
-// @route POST api/decrypt
+// @route POST /decrypt
 // @desc Decrypt msg by chosen algorithm
 router.post(
   "/decrypt",
