@@ -1,18 +1,7 @@
 import React from 'react'
 import MenuItem from './MenuItem'
 
-const SideMenu = ({ open, setSide }) => {
-    const algos = {
-        "caesar": "Caesar Cipher", 
-        "columnar": "Columnar Transposition", 
-        "vigenere": "Vigenére Cipher", 
-        "vernam": "Vernam Cipher", 
-        "enigma": "Enigma", 
-        "lucifer": "DES / 3DES", 
-        "rijndael": "AES (Rijndael)", 
-        "md5": "MD5", 
-        "sha2": "SHA-2"
-    }
+const SideMenu = ({ open, setSide, algos }) => {
 
     const toggleSideMenu = () => {
         setSide(!open)
