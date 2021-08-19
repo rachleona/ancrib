@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { StandardContext } from '../../utils/contexts'
 import Warning from './Warning'
 
@@ -26,6 +27,10 @@ const OptionRow = ({ children, params }) => {
             </Fragment>
         </div>
     )
+}
+
+OptionRow.propTypes = {
+    params: PropTypes.array.isRequired
 }
 
 export default OptionRow

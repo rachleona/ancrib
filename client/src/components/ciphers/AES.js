@@ -1,11 +1,10 @@
 import React, { Fragment, useContext, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { StandardContext } from '../../utils/contexts'
 import OptionRow from '../layout/OptionRow'
 
 const AES = ({ updateOptions }) => {
     const formData = useContext(StandardContext)
-
-    //todo type check for rounds in backend
 
     useEffect(() => {
         updateOptions({
@@ -52,6 +51,10 @@ const AES = ({ updateOptions }) => {
             </OptionRow>
         </Fragment>
     )
+}
+
+AES.propTypes = {
+    updateOptions: PropTypes.func.isRequired
 }
 
 export default AES

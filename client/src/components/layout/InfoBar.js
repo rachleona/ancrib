@@ -1,4 +1,5 @@
 import React, { useEffect, useState, createElement } from 'react'
+import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import j2r from '../../utils/renderViewFromJson'
@@ -91,6 +92,12 @@ const InfoBar = ({ algos, open, setInfo }) => {
             </div>
         </div>
     )
+}
+
+InfoBar.propTypes = {
+    algos: PropTypes.object.isRequired,
+    open: PropTypes.bool.isRequired,
+    setInfo: PropTypes.func.isRequired
 }
 
 export default InfoBar

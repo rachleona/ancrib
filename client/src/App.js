@@ -1,5 +1,5 @@
 // react and router dom
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import './App.css';
@@ -11,6 +11,7 @@ import TopBar from './components/layout/TopBar'
 import Standard from './components/pages/Standard'
 import Custom from './components/pages/Custom'
 import NotFound from './components/pages/NotFound'
+import Footer from './components/layout/Footer'
 import InfoBar from './components/layout/InfoBar'
 
 const App= () => {
@@ -48,6 +49,7 @@ const App= () => {
           </div>
         </div>
         <InfoBar open={ info } setInfo={ setInfo } algos={ algos } />
+        <Footer />
       </div>
     </Router>
   );

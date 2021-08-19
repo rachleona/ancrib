@@ -1,4 +1,5 @@
 import React, { useContext, Fragment, useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { StandardContext } from '../../utils/contexts'
 import OptionRow from '../layout/OptionRow'
 
@@ -257,6 +258,10 @@ const Enigma = ({ updateOptions }) => {
             </OptionRow>
         </Fragment>
     )
+}
+
+Enigma.propTypes = {
+    updateOptions: PropTypes.func.isRequired
 }
 
 export default Enigma

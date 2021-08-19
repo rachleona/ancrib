@@ -485,6 +485,23 @@ a {
   flex: 0 auto;
 }
 
+/* footer */
+#footer {
+  font-size: 10px;
+  position: fixed;
+  bottom: 0;
+  font-family: monospace;
+  padding: 2px 20px;
+  background-color: #303030;
+  width: 100%;
+  color: #d0d0d0;
+}
+
+#footer a {
+  color: #f7c780;
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 767px) {
 
   #menu-title i {

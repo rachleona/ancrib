@@ -19,6 +19,7 @@ function rijndael(plaintext, ciphertext, options) {
   let rounds
   const err = Array()
   const roundCheck = check("int", {
+    "msg": "Number of rounds must be an integer between 1 to 20",
     "range": {
       "max": 20,
       "min" : 1
@@ -28,7 +29,7 @@ function rijndael(plaintext, ciphertext, options) {
   this.setR = (r) => {
     try
     {
-      roundCheck(r)
+      roundCheck(r, "r")
       rounds = r
     } catch(e) {
       err.push(e)

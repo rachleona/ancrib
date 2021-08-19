@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import PropTypes from 'prop-types'
 
 import Caesar from '../ciphers/Caesar'
 import Columnar from '../ciphers/Columnar'
@@ -68,6 +69,12 @@ const CipherBox = ({ title, algo, setFormData }) => {
 
         </div>
     )
+}
+
+CipherBox.propTypes = {
+    title: PropTypes.string.isRequired,
+    algo: PropTypes.string.isRequired,
+    setFormData: PropTypes.func.isRequired
 }
 
 export default CipherBox

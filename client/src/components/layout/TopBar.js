@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import useWindowDimensions from '../../utils/windowDimensions'
 
@@ -26,6 +27,12 @@ const TopBar = ({ side, setSide, setInfo }) => {
             <h1><i className="fas fa-info-circle" onClick={ getInfo }></i></h1>
         </div>
     )
+}
+
+TopBar.propTypes = {
+    side: PropTypes.bool.isRequired,
+    setSide: PropTypes.func.isRequired,
+    setInfo: PropTypes.func.isRequired
 }
 
 export default TopBar

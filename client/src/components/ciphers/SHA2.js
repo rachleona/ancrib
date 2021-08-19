@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { StandardContext } from '../../utils/contexts'
 import OptionRow from '../layout/OptionRow'
 
@@ -49,6 +50,10 @@ const SHA2 = ({ updateOptions }) => {
         </OptionRow>
     </Fragment>
     )
+}
+
+SHA2.propTypes = {
+    updateOptions: PropTypes.func.isRequired
 }
 
 export default SHA2

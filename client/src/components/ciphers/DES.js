@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { StandardContext } from '../../utils/contexts'
 import OptionRow from '../layout/OptionRow'
 
@@ -39,6 +40,10 @@ const DES = ({ updateOptions }) => {
             </OptionRow>
         </Fragment>
     )
+}
+
+DES.propTypes = {
+    updateOptions: PropTypes.func.isRequired
 }
 
 export default DES

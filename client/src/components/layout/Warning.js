@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from'prop-types'
 
 const Warning = ({ text, style }) => {
     return (
@@ -6,6 +7,11 @@ const Warning = ({ text, style }) => {
             { text }
         </div>
     )
+}
+
+Warning.propTypes = {
+    text: PropTypes.string.isRequired,
+    style: PropTypes.object.isRequired
 }
 
 export default Warning

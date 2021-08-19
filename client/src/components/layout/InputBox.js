@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react'
+import PropTypes from 'prop-types'
 import Warning from './Warning'
 import { StandardContext } from '../../utils/contexts'
 
@@ -65,6 +66,12 @@ const InputBox = ({ type, enc, setFormData }) => {
             </textarea>
         </div>
     )
+}
+
+InputBox.propTypes = {
+    type: PropTypes.string.isRequired,
+    enc: PropTypes.object.isRequired,
+    setFormData: PropTypes.func.isRequired
 }
 
 export default InputBox

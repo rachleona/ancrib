@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import MenuItem from './MenuItem'
 
 const SideMenu = ({ open, setSide, algos }) => {
@@ -21,6 +22,12 @@ const SideMenu = ({ open, setSide, algos }) => {
             }
         </div>
     )
+}
+
+SideMenu.propTypes = {
+    open: PropTypes.bool.isRequired,
+    algos: PropTypes.object.isRequired,
+    setSide: PropTypes.func.isRequired
 }
 
 export default SideMenu

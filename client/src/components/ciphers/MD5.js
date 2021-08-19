@@ -1,4 +1,5 @@
 import React, { Fragment, useContext, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { StandardContext } from '../../utils/contexts'
 import OptionRow from '../layout/OptionRow'
 
@@ -49,6 +50,10 @@ const MD5 = ({ updateOptions }) => {
             </OptionRow>
         </Fragment>
     )
+}
+
+MD5.propTypes = {
+    updateOptions: PropTypes.func.isRequired
 }
 
 export default MD5
