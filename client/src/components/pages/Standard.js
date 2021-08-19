@@ -8,70 +8,56 @@ import Warning from '../layout/Warning'
 import { StandardContext } from '../../utils/contexts'
 
 const Standard = () => {
-    const [state, setState] = useState({
+    const defaultState = {
         "p": "",
         "c": "",
-        "options": "",
+        "options": {},
         "errors": []
-    })
-
-    const [warning, setWarning] = useState("")
-
-    useEffect( () => {
-        state.errors.some(err => {
-            if(err.code == "SERVER_ERROR" )
-            {
-                setWarning(<Warning text={ "Something went wrong! Please try again" } style={{ marginBottom: "10px" }}/>)
-                return
-            }
-
-            setWarning("")
-        })
-    }, [state.errors])
+    }
 
     const algos = {
         "caesar": {
             "title": "Caesar Cipher",
             "pEnc": { 
                 "utf8": true, 
-                "hex": true 
+                "hex": false 
             },
             "cEnc": {
                 "utf8": true, 
-                "hex": true 
+                "hex": false 
             }
         }, 
         "columnar": {
             "title": "Columnar Transposition",
             "pEnc": { 
                 "utf8": true, 
-                "hex": true 
+                "hex": false 
             },
             "cEnc": {
                 "utf8": true, 
-                "hex": true 
+                "hex": false 
             }
         }, 
         "vigenere": {
             "title": "Vigenere Cipher",
             "pEnc": { 
                 "utf8": true, 
-                "hex": true 
+                "hex": false 
             },
             "cEnc": {
                 "utf8": true, 
-                "hex": true 
+                "hex": false 
             }
         }, 
         "vernam": {
             "title": "Vernam Cipher",
             "pEnc": { 
                 "utf8": true, 
-                "hex": true 
+                "hex": false 
             },
             "cEnc": {
                 "utf8": true, 
-                "hex": true 
+                "hex": false 
             }
         }, 
         "enigma": {
@@ -134,6 +120,39 @@ const Standard = () => {
     let location = useLocation()
     const path = location.pathname.split('/')[2]
 
+    const [state, setState] = useState(defaultState)
+
+    const [warning, setWarning] = useState("")
+
+    useEffect( () => {
+        state.errors.some(err => {
+            if(err.code === "SERVER_ERROR" )
+            {
+                setWarning(<Warning text={ "Something went wrong! Please try again" } style={{ marginBottom: "10px" }}/>)
+                return true
+            }
+
+            setWarning("")
+            return false
+        })
+    }, [state.errors])
+
+    useEffect( () => {
+        if(!algos[path])
+        {
+            setState(defaultState)
+        }
+        else
+        {
+            setState({...defaultState,
+                options: {
+                    "pEnc": algos[path].pEnc.utf8 ? "utf8" : "hex",
+                    "cEnc": algos[path].cEnc.utf8 ? "utf8" : "hex",
+                    "mode": path
+                }})
+        }
+    }, [location])
+
     if(!algos[path])
     {
         return <Redirect to="/notfound" />
@@ -147,7 +166,7 @@ const Standard = () => {
                 }
             }
             
-            const body = JSON.stringify({ ...state, algo: path })
+            const body = JSON.stringify({ ...state, algo: state.options.mode ? state.options.mode : path })
             const res = await axios.post(`/crypt/${ req }`, body, config)
 
 
@@ -173,7 +192,7 @@ const Standard = () => {
                     <CipherBox title={ algos[path].title } setFormData={ setState } algo={ path } />
                     <div className="buttons">
                         <button className="crypt-button" onClick={ () => { submit("encrypt") } }>encrypt <i className="fas fa-long-arrow-alt-down"></i></button>
-                        <button className="crypt-button" onClick={ () => { submit("decrypt") } }><i className="fas fa-long-arrow-alt-up"></i> decrypt</button>
+                        <button className="crypt-button" onClick={ () => { submit("decrypt") } } disabled={ (path === "md5" || path === "sha2") }><i className="fas fa-long-arrow-alt-up"></i> decrypt</button>
                     </div>
                 </div>
                 <InputBox type="ciphertext" enc={ algos[path].cEnc } setFormData={ setState } />

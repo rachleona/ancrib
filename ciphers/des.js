@@ -8,7 +8,10 @@ function lucifer(plaintext, ciphertext, options) {
     plaintext,
     ciphertext,
     options.key,
-    info.lucifer.modes.pure
+    info.lucifer.modes.pure,
+    options.kEnc,
+    options.pEnc,
+    options.cEnc
   )
 
   const IP = [
@@ -288,18 +291,18 @@ function lucifer(plaintext, ciphertext, options) {
     return res.toString(rformat)
   }
 
-  this.encrypt = (pformat = "utf8", kformat = "utf8", rformat = "hex") => {
+  this.encrypt = () => {
     const { k, p, errors } = this.getAttr("k", "p", "errors")
     if (errors.length == 0)
-      this.setC(cipher(p, k, 0, pformat, kformat, rformat))
+      this.setC(cipher(p, k, 0, options.pEnc, options.kEnc, options.cEnc))
 
     return this.getAttr("p", "c", "errors")
   }
 
-  this.decrypt = (pformat = "hex", kformat = "utf8", rformat = "utf8") => {
+  this.decrypt = () => {
     const { k, c, errors } = this.getAttr("k", "c", "errors")
     if (errors.length == 0)
-      this.setP(cipher(c, k, 1, pformat, kformat, rformat))
+      this.setP(cipher(c, k, 1, options.cEnc, options.kEnc, options.pEnc))
 
     return this.getAttr("p", "c", "errors")
   }
@@ -368,16 +371,16 @@ function triple(plaintext, ciphertext, options) {
     return third.p
   }
 
-  this.encrypt = (pformat = "utf8", kformat = "utf8", rformat = "hex") => {
+  this.encrypt = () => {
     const { k, p, errors } = this.getAttr("k", "p", "errors")
-    if (errors.length == 0) this.setC(encrypt(p, k, pformat, kformat, rformat))
+    if (errors.length == 0) this.setC(encrypt(p, k, options.pEnc, options.kEnc, options.cEnc))
 
     return this.getAttr("p", "c", "errors")
   }
 
-  this.decrypt = (pformat = "hex", kformat = "utf8", rformat = "utf8") => {
+  this.decrypt = () => {
     const { k, c, errors } = this.getAttr("k", "c", "errors")
-    if (errors.length == 0) this.setP(decrypt(c, k, pformat, kformat, rformat))
+    if (errors.length == 0) this.setP(decrypt(c, k, options.cEnc, options.kEnc, options.pEnc))
 
     return this.getAttr("p", "c", "errors")
   }

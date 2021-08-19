@@ -10,7 +10,8 @@ function caesar(plaintext, ciphertext, options) {
     info.caesar.modes.pure
   )
 
-  const cipher = (k, chars) => {
+  const cipher = (key, chars) => {
+    const k = parseInt(key)
     return chars.map((a) => {
       const char = a.charCodeAt(0)
       if (char > 64 && char < 91) {

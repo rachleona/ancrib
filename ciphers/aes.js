@@ -1,7 +1,8 @@
 const info = require("../info.json")
 const protocipher = require("../utils/prototype")
 const { intToBytes, xorBytes, makeBlocks, unBlock } = require("../utils/util")
-
+const  { check } = require("../utils/typechecks")
+ 
 function rijndael(plaintext, ciphertext, options) {
   const bits = options.bits || 128
   protocipher.call(
@@ -9,13 +10,32 @@ function rijndael(plaintext, ciphertext, options) {
     plaintext,
     ciphertext,
     options.key,
-    info.rijndael.modes[bits]
+    info.rijndael.modes[bits],
+    options.kEnc,
+    options.pEnc,
+    options.cEnc,
   )
-  let rounds = options.rounds || 10
+
+  let rounds
+  const err = Array()
+  const roundCheck = check("int", {
+    "range": {
+      "max": 20,
+      "min" : 1
+    }
+  })
 
   this.setR = (r) => {
-    rounds = r
+    try
+    {
+      roundCheck(r)
+      rounds = r
+    } catch(e) {
+      err.push(e)
+    }
   }
+
+  this.setR(options.rounds)
 
   const S = [
     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b,
@@ -246,9 +266,9 @@ function rijndael(plaintext, ciphertext, options) {
     return res
   }
 
-  const encrypt = (plaintext, key, num) => {
-    const blocks = makeBlocks(Buffer.from(plaintext))
-    const keyBytes = Buffer.from(key)
+  const encrypt = (plaintext, key, num, pformat="utf8", kformat="hex", rformat="hex") => {
+    const blocks = makeBlocks(Buffer.from(plaintext, pformat))
+    const keyBytes = Buffer.from(key, kformat)
     const roundKeys = expandKey(keyBytes, num)
     const firstKey = loadMatrix128(keyBytes)
 
@@ -268,12 +288,12 @@ function rijndael(plaintext, ciphertext, options) {
       res = round(res, roundKeys[i], last)
     }
 
-    return unBlock(res).toString("hex")
+    return unBlock(res).toString(rformat)
   }
 
-  const decrypt = (ciphertext, key, num) => {
-    const blocks = makeBlocks(Buffer.from(ciphertext, "hex"))
-    const keyBytes = Buffer.from(key)
+  const decrypt = (ciphertext, key, num, pformat="hex", kformat="hex", rformat="utf8") => {
+    const blocks = makeBlocks(Buffer.from(ciphertext, pformat))
+    const keyBytes = Buffer.from(key, kformat)
     const roundKeys = expandKey(keyBytes, num)
     const firstKey = loadMatrix128(keyBytes)
 
@@ -299,21 +319,29 @@ function rijndael(plaintext, ciphertext, options) {
     const r = unBlock(res)
     const i = r.indexOf(0x00)
 
-    return i == -1 ? r.toString() : r.slice(0, i).toString()
+    return i == -1 ? r.toString() : r.slice(0, i).toString(rformat)
   }
 
   this.encrypt = () => {
     const { k, p, errors } = this.getAttr("k", "p", "errors")
-    if (errors.length == 0) this.setC(encrypt(p, k, rounds))
+    if (errors.length == 0) this.setC(encrypt(p, k, rounds, options.pEnc, options.kEnc, options.cEnc))
 
-    return this.getAttr("p", "c", "errors")
+    const res = this.getAttr("p", "c", "errors")
+    return {
+      ...res,
+      "errors": [...res.errors, ...err]
+    }
   }
 
   this.decrypt = () => {
     const { k, c, errors } = this.getAttr("k", "c", "errors")
-    if (errors.length == 0) this.setP(decrypt(c, k, rounds))
+    if (errors.length == 0) this.setP(decrypt(c, k, rounds, options.cEnc, options.kEnc, options.pEnc))
 
-    return this.getAttr("p", "c", "errors")
+    const res = this.getAttr("p", "c", "errors")
+    return {
+      ...res,
+      "errors": [...res.errors, ...err]
+    }
   }
 }
 

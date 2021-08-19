@@ -97,7 +97,8 @@ function scytale(plaintext, ciphertext, options) {
     info.columnar.modes.scytale
   )
 
-  const encrypt = (k, text) => {
+  const encrypt = (key, text) => {
+    const k = parseInt(key)
     const chars = text.padEnd(Math.ceil(text.length / k) * k, " ")
     const len = Math.ceil(chars.length / k)
 
@@ -116,7 +117,8 @@ function scytale(plaintext, ciphertext, options) {
       .join("")
   }
 
-  const decrypt = (k, chars) => {
+  const decrypt = (key, chars) => {
+    const k = parseInt(key)
     const len = Math.ceil(chars.length / k)
 
     return Array(len)

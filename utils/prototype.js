@@ -1,6 +1,6 @@
 const { check } = require("../utils/typechecks")
 
-function cipher(plaintext, ciphertext, key, info) {
+function cipher(plaintext, ciphertext, key, info, kEnc="utf8", pEnc="utf8", cEnc="utf8") {
   const attr = {
     k: "",
     p: "",
@@ -58,27 +58,27 @@ function cipher(plaintext, ciphertext, key, info) {
       setAttr("k", v, keycheck, e)
       return attr.k
     }
-    this.setK(key)
+    this.setK(key, kEnc)
   }
 
-  this.pIsValid = () => {
-    checkAttr("p", isValidString)
+  this.pIsValid = (e) => {
+    checkAttr("p", isValidString, e)
   }
-  this.cIsValid = () => {
-    checkAttr("c", isValidString)
+  this.cIsValid = (e) => {
+    checkAttr("c", isValidString, e)
   }
 
-  this.setP = (v) => {
-    setAttr("p", v, isValidString)
+  this.setP = (v, e) => {
+    setAttr("p", v, isValidString, e)
     return attr.p
   }
-  this.setC = (v) => {
-    setAttr("c", v, isValidString)
+  this.setC = (v, e) => {
+    setAttr("c", v, isValidString, e)
     return attr.c
   }
 
-  this.setP(plaintext)
-  this.setC(ciphertext)
+  this.setP(plaintext, pEnc)
+  this.setC(ciphertext, cEnc)
 }
 
 module.exports = cipher

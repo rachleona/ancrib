@@ -1,6 +1,5 @@
 const express = require("express")
 const router = express.Router()
-const { check, validationResult } = require("express-validator")
 
 const { apiError, argError } = require("../utils/errors")
 const info = require("../info.json")

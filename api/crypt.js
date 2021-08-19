@@ -40,14 +40,15 @@ router.post(
   [
     check("algo", "Algorithm is requried").not().isEmpty(),
     check("p", "Plaintext must be a string").isString(),
-    check("c", "Ciphertest must be a string").isString(),
+    check("c", "Ciphertext must be a string").isString(),
     check("options", "Options is requried").isObject(),
   ],
   async (req, res) => {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
+        const arr = errors.array().map( err => new argError(err.msg, err.param))
+        return res.status(400).json({ errors: arr })
       }
 
       const { algo, p, c, options } = req.body
@@ -83,14 +84,15 @@ router.post(
   [
     check("algo", "Algorithm is requried").not().isEmpty(),
     check("p", "Plaintext must be a string").isString(),
-    check("c", "Ciphertest must be a string").isString(),
+    check("c", "Ciphertext must be a string").isString(),
     check("options", "Options is requried").isObject(),
   ],
   async (req, res) => {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
+        const arr = errors.array().map( err => new argError(err.msg, err.param))
+        return res.status(400).json({ errors: arr })
       }
 
       const { algo, p, c, options } = req.body

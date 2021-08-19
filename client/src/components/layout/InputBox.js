@@ -9,17 +9,31 @@ const InputBox = ({ type, enc, setFormData }) => {
     // render warning message when needed
     useEffect( () => {
         formData.errors.some( err => {
-            if(err.para == type)
+            if(err.para === type[0])
             {
                 setWarning(<Warning text={ err.msg } style={{ marginBottom: "10px" }}/>)
+                return true
             }
+
+            setWarning("")
+            return false
         })
     }, [formData.errors])
 
     const updateForm = (type, value) => {
         setFormData({
             ...formData,
-            [type == "plaintext" ? "p" : "c"]: value
+            [type[0]]: value
+        })
+    }
+
+    const updateEnc = (value) => {
+        setFormData({
+            ...formData,
+            "options": {
+                ...formData.options,
+                [`${ type[0] }Enc`]: value
+            }
         })
     }
 
@@ -27,14 +41,14 @@ const InputBox = ({ type, enc, setFormData }) => {
         <div className="input-box">
             <div className="text-input-top">
                 {
-                    type == "plaintext" ? <label>Plaintext</label> : ""
+                    type === "plaintext" ? <label>Plaintext</label> : ""
                 }
-                <select>
+                <select onChange={ e => updateEnc(e.target.value) } value={ formData.options[`${ type[0] }Enc`] }>
                     <option value="utf8" disabled={ !enc.utf8 }>text</option>
                     <option value="hex" disabled={ !enc.hex }>hexadecimal</option>
                 </select>
                 {
-                    type == "ciphertext" ? <label>Ciphertext</label> : ""
+                    type === "ciphertext" ? <label>Ciphertext</label> : ""
                 }
             </div>
             <Fragment>
@@ -45,7 +59,7 @@ const InputBox = ({ type, enc, setFormData }) => {
             maxLength="5000" 
             className="text-input" 
             id={ type }
-            value={ formData[type == "plaintext" ? "p" : "c"] } 
+            value={ formData[type[0]] } 
             onChange={ e => { updateForm(type, e.target.value) } }>
             
             </textarea>

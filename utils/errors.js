@@ -6,10 +6,11 @@ function typeError(msg, requiredType, para) {
   this.msg = msg
 }
 
-function argError(msg) {
+function argError(msg, para=null) {
   this.error = new Error(msg)
   this.code = "API_MISSING_FAULTY_ARG"
   this.msg = msg
+  this.missing = para
 }
 
 function apiError() {

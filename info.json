@@ -1,6 +1,14 @@
 {
     "caesar": {
-        "description": "",
+        "description": {
+            "type": "div",
+            "children": [
+                { 
+                    "type": "p",
+                    "children": "Some explanation about caesar cipher and stuff I guess."
+                }
+            ]
+        },
         "modes": {
             "pure": {
                 "key": true,

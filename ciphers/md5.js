@@ -8,11 +8,13 @@ function md5(plaintext, ciphertext, options) {
     plaintext,
     ciphertext,
     options.key,
-    info.md5.modes.pure
+    info.md5.modes.pure,
+    options.kEnc, 
+    options.pEnc
   )
 
-  const addPadding = (plaintext) => {
-    const buf = Buffer.from(plaintext)
+  const addPadding = (plaintext, enc="utf8") => {
+    const buf = Buffer.from(plaintext, enc)
     const size = buf.length
     const pad = Buffer.alloc(
       size % 64 < 56 ? 56 - (size % 64) : 120 - (size % 64)
@@ -81,8 +83,8 @@ function md5(plaintext, ciphertext, options) {
     return (b + leftRotate(n, s)) >>> 0
   }
 
-  const digest = (message) => {
-    const m = makeBlocks(addPadding(message), 64)
+  const digest = (message, enc) => {
+    const m = makeBlocks(addPadding(message, enc), 64)
     let A = 0x67452301
     let B = 0xefcdab89
     let C = 0x98badcfe
@@ -136,7 +138,7 @@ function md5(plaintext, ciphertext, options) {
 
   this.hash = () => {
     const { p, errors } = this.getAttr("p", "errors")
-    if (errors.length == 0) this.setC(digest(p))
+    if (errors.length == 0) this.setC(digest(p, options.pEnc))
 
     return this.getAttr("p", "c", "errors")
   }
@@ -148,10 +150,12 @@ function HMACmd5(plaintext, ciphertext, options) {
     plaintext,
     ciphertext,
     options.key,
-    info.md5.modes.hmac
+    info.md5.modes.hmac,
+    options.kEnc, 
+    options.pEnc
   )
 
-  const digest = (message, key, pformat = "utf8", kformat = "utf8") => {
+  const digest = (message, key, pformat = "utf8", kformat = "hex") => {
     const ipad = Buffer.alloc(64, 0x36)
     const opad = Buffer.alloc(64, 0x5c)
 
@@ -170,9 +174,9 @@ function HMACmd5(plaintext, ciphertext, options) {
     return myMD5.hash().c
   }
 
-  this.hash = (pformat = "utf8", kformat = "utf8") => {
+  this.hash = () => {
     const { p, k, errors } = this.getAttr("p", "k", "errors")
-    if (errors.length == 0) this.setC(digest(p, k, pformat, kformat))
+    if (errors.length == 0) this.setC(digest(p, k, options.pEnc, options.kEnc))
 
     return this.getAttr("p", "c", "errors")
   }

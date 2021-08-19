@@ -28,7 +28,7 @@ const App= () => {
     "lucifer": "DES / 3DES", 
     "rijndael": "AES (Rijndael)", 
     "md5": "MD5", 
-    "sha2": "SHA-2"
+    "sha2": "SHA-256"
   }
 
   return (

@@ -12,27 +12,51 @@ import SHA2 from '../ciphers/SHA2'
 import { StandardContext } from '../../utils/contexts'
 
 const CipherBox = ({ title, algo, setFormData }) => {
+    
+    const formData = useContext(StandardContext)
     const [options, setOptions] = useState({})
 
-    const formData = useContext(StandardContext)
+    const updateOptions = (e, multi=false) => {
+        if(!multi)
+        {
+            const v = e.value
+            setOptions({
+                ...options,
+                [e.name]: v
+            })
+            return
+        }
+
+        setOptions({
+            ...options,
+            ...e
+        })
+    }
+
+    useEffect( () => {
+        setOptions({})
+    }, [title])
 
     useEffect( () => {
         setFormData({
             ...formData,
-            options
+            options: {
+                ...formData.options,
+                ...options
+            }
         })
     }, [options])
 
     const algos = {
-        "caesar": <Caesar setOptions={ setOptions } options={ options }/>, 
-        "columnar": <Columnar setOptions={ setOptions } />, 
-        "vigenere": <Vigenere setOptions={ setOptions } />, 
-        "vernam": <Vernam setOptions={ setOptions } />, 
-        "enigma": <Enigma setOptions={ setOptions } />, 
-        "lucifer": <DES setOptions={ setOptions } />, 
-        "rijndael": <AES setOptions={ setOptions } />, 
-        "md5": <MD5 setOptions={ setOptions } />, 
-        "sha2": <SHA2 setOptions={ setOptions } />
+        "caesar": <Caesar updateOptions={ updateOptions }/>, 
+        "columnar": <Columnar updateOptions={ updateOptions } />, 
+        "vigenere": <Vigenere updateOptions={ updateOptions }/>, 
+        "vernam": <Vernam updateOptions={ updateOptions }/>, 
+        "enigma": <Enigma updateOptions={ updateOptions } />, 
+        "lucifer": <DES updateOptions={ updateOptions }/>, 
+        "rijndael": <AES updateOptions={ updateOptions }/>, 
+        "md5": <MD5 updateOptions={ updateOptions }/>, 
+        "sha2": <SHA2 updateOptions={ updateOptions }/>
       }
 
     return (

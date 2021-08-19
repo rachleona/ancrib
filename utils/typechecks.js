@@ -10,24 +10,47 @@ const check = (type, options = { msg: "error", misc: {} }) => {
       comp = (v) => !(v instanceof rsaKeyPair) || rsaKeyPair.size != size
       break
     case "enm":
-      comp = (v) => !(v instanceof enigmaSetup)
+      comp = (v) => !(v instanceof enigmaSetup) 
       break
     case "int":
-      comp = (v) => typeof v != "number" || !Number.isInteger(v)
+      comp = (v) => {
+        try {
+          const n = parseFloat(v)
+          let res = typeof n == "number" && Number.isInteger(n)
+          res = res && (!options.range || (n <= options.range.max && n >= options.range.min ))
+          return !res
+        }
+        catch(e) {
+          return true
+        }
+      }
       break
     case "str":
       comp = (v, enc = "utf8") => {
         let res = typeof v == "string" || v instanceof Buffer
         if (!res) return true
-        const buf = Buffer.from(v, enc)
-        res =
-          res && (!options.misc.unique || new Set(v.split("")).size == v.length)
-        res =
-          res &&
-          (!options.misc.len ||
-            (buf.length * 8 >= options.misc.len.min &&
-              buf.length * 8 <= options.misc.len.max))
-        return !res
+        try
+        {
+          const buf = Buffer.from(v, enc)
+          if(buf.length === 0 && v.length !== 0) throw "error"
+  
+          // no duplicate characters?
+          res =
+            res && (!options.misc.unique || new Set(v.split("")).size == v.length)
+  
+          // string length check based on bit length
+          res =
+            res &&
+            (!options.misc.len ||
+              (buf.length * 8 >= options.misc.len.min &&
+                buf.length * 8 <= options.misc.len.max))
+          
+          // regexp check
+          res = res && (!options.misc.re || v.match(options.misc.re))
+          return !res
+        } catch(err) {
+          return true
+        }
       }
       break
     default:
