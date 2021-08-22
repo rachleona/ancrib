@@ -17,27 +17,27 @@ const Enigma = ({ updateOptions }) => {
     const standardRotors = [
         {
             "seq": "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
-            "notch": "X",
+            "notch": "Y",
             "start": 9
         },
         {
             "seq": "AJDKSIRUXBLHWTMCQGZNPYFVOE",
-            "notch": "S",
+            "notch": "M",
             "start": 1
         },
         {
             "seq": "BDFHJLCPRTXVZNYEIWGAKMUSQO",
-            "notch": "M",
+            "notch": "D",
             "start": 22
         },
         {
             "seq": "ESOVPZJAYQUIRHXLNFTGKDCMWB",
-            "notch": "Q",
+            "notch": "R",
             "start": 7
         },
         {
             "seq": "VZBRGITYUPSDNHLXAWMJQOFECK",
-            "notch": "K",
+            "notch": "H",
             "start": 6
         }
     ]
@@ -155,7 +155,6 @@ const Enigma = ({ updateOptions }) => {
                     name="r1Start" 
                     value={ formData.options.r1Start || "" } 
                     onChange={ e => { 
-                        setState({ ...state, "standard": false })
                         updateOptions(e.target)
                     } }
                     style={{ width: "20%" }}
@@ -199,7 +198,6 @@ const Enigma = ({ updateOptions }) => {
                     name="r2Start" 
                     value={ formData.options.r2Start || "" } 
                      onChange={ e => { 
-                        setState({ ...state, "standard": false })
                         updateOptions(e.target)
                     } }
                     style={{ width: "20%" }}
@@ -243,7 +241,6 @@ const Enigma = ({ updateOptions }) => {
                     name="r3Start" 
                     value={ formData.options.r3Start || "" } 
                      onChange={ e => { 
-                        setState({ ...state, "standard": false })
                         updateOptions(e.target)
                     } }
                     style={{ width: "20%" }}

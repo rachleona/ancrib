@@ -5,7 +5,19 @@
             "children": [
                 { 
                     "type": "p",
-                    "children": "Some explanation about caesar cipher and stuff I guess."
+                    "children": "The Caesar Cipher is one of the most basic substitution ciphers, dating back to Ancient Rome, most notably used by Julius Caesar himself to hide secret messages. The encryption is simple: simply take each character in the text and substitute it with the nth next character in the alphabet, n being the integer used as a secret key. E.g by using a key of 3:"
+                },
+                {
+                    "type": "img",
+                    "props": {
+                        "src": "../images/Caesar3.svg",
+                        "alt": "Caesar Cipher shifts.",
+                        "style": { "maxWidth": "100%" }
+                    }
+                },
+                { 
+                    "type": "p",
+                    "children": "Of course, since there are only 26 possible key for this encryption (in the case of English) it is a very weak cipher that can easily be broken by brute force."
                 }
             ]
         },
@@ -19,7 +31,39 @@
         }
     },
     "columnar": {
-        "description": "",
+        "description": {
+            "type": "div",
+            "children": [
+                { 
+                    "type": "p",
+                    "children": "Transposition ciphers are basically the systematic scrambling around of the characters in a piece of text. A classic columnar transposition involves a key of n unique characters, e.g. 'ACB'. The plaintext would then be divided into chunks of the same length as the key and stacked below the key in a table with n columns. These columns are then reordered so that the characters in the key are now in alphabetical order. The resultant ciphertext is constructed by writing out the chracters column by column."
+                },
+                {
+                    "type": "img",
+                    "props": {
+                        "src": "../images/columnar.png",
+                        "alt": "Columnar Transposition Demo",
+                        "style": { "maxWidth": "100%" }
+                    }
+                },
+                { 
+                    "type": "p",
+                    "children": "A simpler, much more ancient transposition is also available by selecting scytale in modes. This is a cipher used by ancient Spartans and involves wrapping messages around rods of specific widths called scytales. The ciphertext is produced by writing down the characters as seen vertically."
+                },
+                {
+                    "type": "img",
+                    "props": {
+                        "src": "../images/Skytale.png",
+                        "alt": "Scytale",
+                        "style": { "maxWidth": "100%" }
+                    }
+                },
+                {
+                    "type": "p",
+                    "children": "In the implementation here, we take an integer as key to simulate the number of characters that can be wrapped around a scytale once."
+                }
+            ]
+        },
         "modes": {
             "pure": {
                 "key": true,
@@ -38,7 +82,31 @@
         }
     },
     "vigenere": {
-        "description": "",
+        "description": {
+            "type": "div",
+            "children": [
+                { 
+                    "type": "p",
+                    "children": "The Vigenére Cipher is a classic example of polyalphabetic substitution, in which the same characters are substituted by different characters each time. Typically, a certain keyword is chosen as key and applied to the plaintext repeatedly to be encrypted according to the tabula recta:"
+                },
+                {
+                    "type": "img",
+                    "props": {
+                        "src": "../images/tabula_recta.jpeg",
+                        "alt": "Tabula recta",
+                        "style": { "maxWidth": "100%" }
+                    }
+                },
+                { 
+                    "type": "p",
+                    "children": "For example, to encrypt the plaintext 'ABCDE' with key 'PASS', we start by finding the intersection between the A column and P row - so we substitute the first character 'A' with 'P'. Subsequently, we repeat this process with B and A, C and S, D and S, and finally E and P. The resultant ciphertext would be 'PBUVT'."
+                },
+                {
+                    "type": "p",
+                    "children": "In the autokey mode though, instead using the same keyword repeatedly, after using the key once the rest of the text is encrypted using itself as the key. In the case of the previous example, the final character E would be encrypted using A instead of P, the result being 'PBUVE' instead. The autokey is considered unbreakable for a few hundred years and is a concept still used in modern cryptography."
+                }
+            ]
+        },
         "modes": {
             "pure": {
                 "key": true,
@@ -55,7 +123,19 @@
         }
     },
     "vernam": {
-        "description": "",
+        "description": {
+            "type": "div",
+            "children": [
+                { 
+                    "type": "p",
+                    "children": "Also known as a one-time pad, this encryption works very similarly to the Vigenére Cipher, a key difference being that the Vernam cipher requires the key to be of the same length as the ciphertext. This property makes Vernam cipher a virtually perfect encryption, despite it being impractical for long messages." 
+                },
+                { 
+                    "type": "p",
+                    "children": "In this implementation, if the key provided is shorter than the plaintext then the text beyond the length of the key will not be encrypted."
+                }
+            ]
+        },
         "modes": {
             "pure": {
                 "key": true,
@@ -66,7 +146,29 @@
         }
     },
     "rijndael": {
-        "description": "",
+        "description": {
+            "type": "div",
+            "children": [
+                { 
+                    "type": "p",
+                    "children": "The rijndael algorithm was adopted by NIST as the Advanced Encryption Standard in 2001, as a successor to DES. It is also a block cipher that can take 128-bit, 196-bit, or 256-bit input as keys. As of now, only the 128-bit version is available on this site. As a block cipher, the inputs can be run through the algorithm several times in 'rounds'. Read more on block ciphers in the DES page." 
+                },
+                { 
+                    "type": "p",
+                    "children": [
+                        "AES is currently one of the most widely used encryption algorithm in many communication channels (usually used in CBC mode to maximise security). The encryption process consists of 4 main parts: substitution, shift rows, mix columns and applying round key. Read more about it in ",
+                        { 
+                            "type": "a",
+                            "props": {
+                                "href": "http://www.moserware.com/2009/09/stick-figure-guide-to-advanced.html"
+                            },
+                            "children": "this guide"
+                        },
+                        "."
+                    ]
+                }
+            ]
+        },
         "modes": {
             "128": {
                 "key": true,
@@ -79,7 +181,37 @@
         }
     },
     "lucifer": {
-        "description": "",
+        "description": {
+            "type": "div",
+            "children": [
+                { 
+                    "type": "p",
+                    "children": [
+                        "The lucifer algorithm, later crowned Data Encryption Standard (DES) by NIST, is a modern block cipher that takes 56-bit sized keys (actually 64-bits but 8 bits will be discarded in the encryption process). Block ciphers are encryptions that involves splitting the plaintext into fixed size blocks before encrypting. Rather than just encrypting blocks separately (called the ECB mode), there are many block cipher modes used in practical applications like CBC, OFB and CTR that can increase security. All block ciphers on this site are implemented in ECB mode. Read more about them ",
+                        { 
+                            "type": "a",
+                            "props": {
+                                "href": "https://en.wikipedia.org/wiki/Data_Encryption_Standard"
+                            },
+                            "children": "here"
+                        },
+                        "."
+                    ]
+                },
+                {
+                    "type": "img",
+                    "props": {
+                        "src": "../images/ECB.svg",
+                        "alt": "ECB mode",
+                        "style": { "maxWidth": "100%", "background": "white" }
+                    }
+                },
+                { 
+                    "type": "p",
+                    "children": "This algorithm features an interesting structure called the Feistel network, named after its creator Horst Feistel, which essential allows the algorithm to work symmetrically. In other words, the same process can be used to encrypt and decrypt the text, except that the key is used in reverse order for decryption. While this relatively old algorithm has already been broken several times, its fortified version, 3DES i.e. a triple encryption with DES, is still used in some security systems. That said, the small key size of DES and slow speed of 3DES has led to its eventual replacement by the Advanced Encryption Standard(AES), otherwise known as the rijndael algorithm."
+                }
+            ]
+        },
         "modes": {
             "pure": {
                 "key": true,
@@ -100,7 +232,50 @@
         }
     },
     "enigma": {
-        "description": "",
+        "description": {
+            "type": "div",
+            "children": [
+                {
+                    "type": "img",
+                    "props": {
+                        "src": "../images/enigma.jpg",
+                        "alt": "Four rotor enigma machine",
+                        "style": { "maxWidth": "100%", "marginTop": "10px" }
+                    }
+                },
+                { 
+                    "type": "p",
+                    "children": "The rotor encryption machine Enigma was used by the Germans during the second world war was considered to be unbreakable for some time until the cryptanalysts of Bletchley Park, led by the infamous Alan Turing, successfully built a machine called a Bombe to crack it."
+                },
+                { 
+                    "type": "p",
+                    "children": "A typical Enigma machine consists of the typewriter, a few rotors, a reflector and a plugboard. Originally, these machines have 3 rotors, but a 4 rotor version (Kriegsmarine M4) was introduced in 1942, and was mainly used by the German Kriegsmarine. The version implemented in this site is the original, 3 rotors Wermacht machine."
+                },
+                {
+                    "type": "p",
+                    "children": "The rotors are detachable and can be adjusted to start rotating at different positions. Another important setting lies in the plugboard, which allows the user to connect pairs of alphabets with wires so that the characters typed in undergo an initial substitution before getting run through the main machine. The rotors chosen, along with each starting position and the plugboard settings acts as the secret key used to both encrypt and decrypt the text. An interesting thing about the Enigma though, is that to decrypt, we simply need to type the ciphertext into machine with the same initial settings. There is no 'decrypt mode'. The algorithm was simply designed to be reversible through the same process which made keeping wartime communication confidential relatively simply for the German military of the time."
+                },
+                {
+                    "type": "p",
+                    "children": "Each Enigma rotor has 26 positions for each of the alphabet, with the characters arranged in various ways. On one of the alphabets is a notch, that will cause the adjacent rotor to turn as it turns from the notched alphabet. For each character typed, the first rotor turns or 'steps' up one position. So as a message is being typed into an Enigma machine, the first rotor consistently steps up, occasionally bring the second and third with it. This causes the 'key' to change constantly, making the resultant ciphertext extremely difficult to cryptanalyse."
+                },
+                {
+                    "type": "p",
+                    "children": "The wiring of Enigma machines are highly complex, but to put it simply: the character typed in is run through each rotor and undergoes subsitution once each time. The resultant character is then run through the reflector which basically implements a symmetric substitution (e.g. if A turns to M then M would turn to A). To finish it off, the result is run through the rotors again in reverse order to produce the encrypted character."
+                },
+                {
+                    "type": "p",
+                    "children": "There were 5 standard rotors used at the time that the Germans could choose 3 from. That wouldn't seem like a lot, but combined with the many possible starting positions and pulgboard settings, the number of possible initial settings was an impressive 107,458,687,327,250,619,360,000 possible combinations. A remarkable feat for technology of the time, truly worthy of being one of the most remembered algorithm in crytography."
+                },
+                { 
+                    "type": "a",
+                    "props": {
+                        "href": "http://users.telenet.be/d.rijmenants/en/enigmatech.htm"
+                    },
+                    "children": "Read more about Enigma"
+                }
+            ]
+        },
         "modes": {
             "pure": {
                 "key": true,
@@ -111,7 +286,27 @@
         }
     },
     "md5": {
-        "description": "",
+        "description": {
+            "type": "div",
+            "children": [
+                { 
+                    "type": "p",
+                    "children": "MD5 is one of the earliest hash functions recognised by NIST. This type of algorithms maps any input into a fixed-size, close to random output, meant to be irreversible. There are many uses to hash functions currently, such as for authentication and storing passwords. MD5 specifically produce results that are 128-bit in length, and takes a key between 128-512 bits long to produce HMACs."
+                },
+                { 
+                    "type": "p",
+                    "children": "Hash functions typically do not need a key to work. However, a secret key is required in HMAC (Hashed Message Authentication Code) mode to acheive the purpose of authentication. HMACs are typically used in communication to ensure that the messages received have not been tampered with, and that the sender is indeed the person/entity they claim to be."
+                },
+                { 
+                    "type": "p",
+                    "children": "This is possible due to the fact that any small change in a message will produce a completely different hash, and while it is possible for two messages to share the same hash (known as a collision), all secure hash functions, approved by NIST, are highly resistant against collisions. So even if someone did tamper with your message in a way that the HMAC remains unchanged, it is most likely that the message wouldn't make sense anymore."
+                },
+                { 
+                    "type": "p",
+                    "children": "That said, MD5 is a relatively old algorithm that has been broken several times and has since been replaced with the SHA family, which is much more collision resistant and secure in general."
+                }
+            ]
+        },
         "modes": {
             "pure": {
                 "key": false
@@ -127,7 +322,26 @@
         }
     },
     "sha2": {
-        "description": "",
+        "description": {
+            "type": "div",
+            "children": [
+                { 
+                    "type": "p",
+                    "children": "SHA-256 is the 256-bit version of the SHA-2 algorithm that produces outputs of sstandard 256-bit length. In HMAC mode, it takes a string between 256-512 bits long as key."
+                },
+                { 
+                    "type": "p",
+                    "children": "SHA-256 is one of the approved hash functions as recommended by NIST. To read more about hash functions, go to the MD5 page or follow the link below."
+                },
+                { 
+                    "type": "a",
+                    "props": {
+                        "href": "https://en.wikipedia.org/wiki/Cryptographic_hash_function"
+                    },
+                    "children": "Read more on hash functions"
+                }
+            ]
+        },
         "modes": {
             "pure": {
                 "key": false

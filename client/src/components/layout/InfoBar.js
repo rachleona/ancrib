@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import j2r from '../../utils/renderViewFromJson'
 import ReactDOM from 'react-dom'
+import skytale from '../../images/Skytale.png'
 
 const InfoBar = ({ algos, open, setInfo }) => {
     const close = () => {
@@ -17,11 +18,11 @@ const InfoBar = ({ algos, open, setInfo }) => {
             "children": [
                 {
                     "type": "p",
-                    "children": "AnCrib is my EPQ project and this part is supposed to be some introduction to the project but I seriously don't know what to write right now I'll add these in next time so just typing in random stuff right now to use as placeholders."
+                    "children": "AnCrib is my EPQ artefact project - an encryption web app built on the MERN stack. There are currently 9 different algorithms featured on this site, ranging from classic ciphers to modern hash functions. Some of them have several different modes so please take your time to explore!"
                 },
                 {
                     "type": "p",
-                    "children": "Like probably unnecessarily long but gotta make it look realistic you know. Seriously though I'm so good at spouting nonsense even if I say so myself like this entire passage has no real content I'm just writing this to fill the void and make my design look realistic? But anyway I think this is long enough to be convincing so I'll stop here and go write some actual code ok bye"
+                    "children": "Use the button on the top left corner to toggle the side menu and press the one of the top right (you already did!) to see more information about each algorithm. Always enter the unencrypted text in the plaintext box. If you want something decrypted, enter the encrypted text in the ciphertext box instead. Have fun!"
                 }
             ]
         }

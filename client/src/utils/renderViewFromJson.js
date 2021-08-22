@@ -1,3 +1,4 @@
+// copied from https://gist.github.com/praveensastry/132eacff4a684a48e73cae21f2451078
 function renderViewFromJson(create, mapper, schema) {
   if (typeof schema === "undefined") {
     schema = mapper;
