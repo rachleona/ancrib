@@ -351,11 +351,21 @@ a {
   margin-bottom: 10px;
   border: #f3a738 2px solid;
   border-radius: 5px;
-  background: transparent;
   color: #f3a738;
   font-family: monospace;
   padding: 8px 12px;
   transition: all 0.2s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+   /* needed */
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   /* SVG background image */
+   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23F3A738'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+   background-size: 12px;
+   background-position: calc(100% - 10px) calc(50% + 5px);
+   background-repeat: no-repeat;
+   background-color: transparent;
+   padding-right: 30px;
 }
 
 .text-input-top select:focus {
@@ -363,8 +373,12 @@ a {
 }
 
 .text-input-top select:hover {
-  background-color: #f3a738;
   color: #4d4d4d;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%234D4D4D'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+  background-size: 12px;
+  background-position: calc(100% - 10px) calc(50% + 5px);
+  background-repeat: no-repeat;
+  background-color: #f3a738;
   transition: all 0.2s cubic-bezier(0.55, 0.085, 0.68, 0.53);
 }
 
@@ -466,6 +480,21 @@ a {
   flex-grow: 1;
 }
 
+.options-row select {
+   /* needed */
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   /* SVG background image */
+   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%234D4D4D'><polygon points='0,0 100,0 50,50'/></svg>") no-repeat;
+   background-size: 12px;
+   background-position: calc(100% - 10px) calc(50% + 5px);
+   background-repeat: no-repeat;
+   background-color: #d0d0d0;
+   border-radius: 0;
+   padding-right: 30px;
+}
+
 .options-row input:focus , .options-row select:hover {
   background-color: #f7c780;
   outline: none;
@@ -496,15 +525,17 @@ a {
   position: fixed;
   bottom: 0;
   font-family: monospace;
-  padding: 2px 20px;
+  padding: 2px 50px;
   background-color: #303030;
   width: 100%;
   color: #d0d0d0;
+  text-align: right;
 }
 
 #footer a {
   color: #f7c780;
   text-decoration: underline;
+  margin-right: 50px;
 }
 
 @media screen and (max-width: 767px) {

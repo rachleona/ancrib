@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import j2r from '../../utils/renderViewFromJson'
 import ReactDOM from 'react-dom'
-import skytale from '../../images/Skytale.png'
 
 const InfoBar = ({ algos, open, setInfo }) => {
     const close = () => {
