@@ -35,17 +35,6 @@ const Columnar = ({ updateOptions }) => {
                     onChange={ e => { updateOptions(e.target) } }
                     style={ formData.options.mode === "scytale" ? {} : { width: "60%" } }
                 />
-                {
-                    formData.options.mode === "scytale" ? "" :
-                    <select
-                        name="kEnc" 
-                        value={ formData.options.kEnc || "utf8" } 
-                        onChange={ e => { updateOptions(e.target) } }
-                    >
-                        <option value="utf8">text</option>
-                        <option value="hex">hex</option>
-                    </select>
-                }
             </OptionRow>  
         </Fragment>
     )
