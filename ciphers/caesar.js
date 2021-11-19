@@ -35,7 +35,7 @@ function caesar(plaintext, ciphertext, options) {
 
   this.decrypt = () => {
     const { k, c, errors } = this.getAttr("k", "c", "errors")
-    if (errors.length == 0) this.setP(cipher(26 - k, c.split("")).join(""))
+    if (errors.length == 0) this.setP(cipher(26 - k % 26, c.split("")).join(""))
     return this.getAttr("p", "c", "errors")
   }
 }

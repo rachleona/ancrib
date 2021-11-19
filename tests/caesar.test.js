@@ -44,6 +44,14 @@ test("encrypt method works correctly", () => {
         "p": "The brown fox jumped over the lazy dog.",
         "errors": []
     })
+
+    myCaesar.setP("The brown fox jumped over the lazy dog.")
+    myCaesar.setK(26)
+    expect(myCaesar.encrypt()).toStrictEqual({
+        "c": "The brown fox jumped over the lazy dog.",
+        "p": "The brown fox jumped over the lazy dog.",
+        "errors": []
+    })
 })
 
 test("encrypt method handles invalid inputs correctly by pushing error into array", () => {
@@ -80,6 +88,14 @@ test("decrypt method works correctly", () =>{
     myCaesar.setK(5)
     expect(myCaesar.decrypt()).toStrictEqual({
         "c": "Ymj gwtbs ktc ozruji tajw ymj qfed itl.",
+        "p": "The brown fox jumped over the lazy dog.",
+        "errors": []
+    })
+
+    myCaesar.setC("The brown fox jumped over the lazy dog.")
+    myCaesar.setK(52)
+    expect(myCaesar.decrypt()).toStrictEqual({
+        "c": "The brown fox jumped over the lazy dog.",
         "p": "The brown fox jumped over the lazy dog.",
         "errors": []
     })
