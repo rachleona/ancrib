@@ -15,7 +15,7 @@
   "description": "Web encryption tool",
   "dependencies": {
     "axios": "^0.21.1",
-    "big-integer": "^1.6.48",
+    "big-integer": "^1.6.51",
     "express": "^4.17.1",
     "express-validator": "^6.12.0",
     "mongodb": "^3.6.3",
