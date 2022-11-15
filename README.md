@@ -6,13 +6,13 @@ This project was done as part of my EPQ project in 2020-2021. 9 ciphers are curr
 
 P.S. Some description/history of each algorithm can be shown by toggling the info button on the top right of the site :)
 
-## Main technologies used
+### Main technologies used
 - Express
 - React
 - Jest 
 - Heroku 
 
-## Algorithms/Ciphers currently included
+### Algorithms/Ciphers currently included
 - Caesar Cipher
 - Columnar Transposition
 - Vigenére Cipher
